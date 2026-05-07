@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Panel de Análisis</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.2s, background-color 0.2s;
+            border-left: 5px solid #3498db;
+        }
+        .card:hover {
+            transform: translateX(10px);
+            background-color: #ebf5fb;
+        }
+        p.descripcion {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Visualización de Datos</h1>
+    <p>Selecciona uno de los análisis para ver los detalles:</p>
+
+    <div class="container">
+        <a href="mapa_transporte_trabajo.html" class="card">
+            📍 Mapa de Transporte al Trabajo
+            <p class="descripcion">Visualización geoestadística de la movilidad laboral.</p>
+        </a>
+
+        <a href="num_coches_vendidos.html" class="card">
+            🚗 Análisis de Coches Vendidos
+            <p class="descripcion">Gráficos sobre la evolución del mercado automotriz.</p>
+        </a>
+    </div>
+
+</body>
+</html> 
