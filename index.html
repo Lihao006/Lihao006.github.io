@@ -56,11 +56,21 @@
     <div class="container">
         <a href="num_coches_vendidos.html" class="card">
             Mapa 1: 🚗 Volumen del Mercado en cada Estado
-            <p class="descripcion">Gráfico que muestra la cantidad de coches vendidos en cada estado.</p>
+            <p class="descripcion">Gráfico que muestra la cantidad de coches vendidos en cada estado. 
+                Se puede observar un gran grupo de estados con pocas ventas (entre 1-10) al noroeste de Estdos Unidos, por lo que se considera que no se podrá obtener conclusiones robustas en esos estados.
+                Hemos investigado las posibles razones sobre este fenómeno, y al final pudimos encontrar la razón principal: la baja concentración de la población en las zonas del noroeste de Estados Unidos.
+                Mientras se daba a cabo la investigación, también encontramos una base de datos sobre el uso de los medios de transporte al trabajo, por lo que nos dimos cuenta que el uso del transporte público podría inferir directamente sobre el mercado de los coches, entonces decidimos crear un mapa (Mapa 2) a partir de la dataset encontrada.
+            </p>
         </a>
         <a href="mapa_transporte_trabajo.html" class="card">
             Mapa 2: 📍 Mapa de Transporte al Trabajo
-            <p class="descripcion">Visualización geoestadística de la movilidad laboral.</p>
+            <p class="descripcion">Visualización geoestadística de la movilidad laboral.
+                Este es el mapa creado a partir de la nueva base de datos.
+                Se puede observar que el uso del transporte público en EE. UU. es notablemente bajo (entre 0.5% - 4%), mientras que el vehículo privado predomina con tasas de entre el 70% y el 90%. 
+                No se observa una correlación clara entre estos hábitos de movilidad y el bajo volumen de ventas registrado en nuestra base de datos para el noroeste. 
+                Por ejemplo, Montana solo registra dos ventas pese a tener indicadores de transporte privado (de casi 82 %), mientras que Texas, con casi 5500 ventas en nuestra dataset, también presenta un uso promedio del vehículo privado parecido. 
+                La única excepción significativa es Nueva York, que registra el uso de transporte público más alto del país (23.5%) y el menor uso de vehículos privados (55.5%).
+            </p>
         </a>
         <a href="uni_4variables.html" class="card">
             Mapa 3: 📊 Análisis Univariante por Estado
