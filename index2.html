@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mi Panel de Análisis</title>
+
+<style>
+
+/* ═══════════════════════════════════════
+   FONDO CARTOON ANIMADO
+═══════════════════════════════════════ */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    line-height:1.6;
+    color:#333;
+    overflow-x:hidden;
+    background:#87CEEB;
+    position:relative;
+    min-height:100vh;
+}
+
+/* Escena fija */
+.cartoon-scene{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    overflow:hidden;
+}
+
+/* Cielo */
+.sky{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(to bottom,
+        #87ceeb 0%,
+        #bde9ff 60%,
+        #e8f8ff 100%);
+}
+
+/* Nubes */
+.cloud{
+    position:absolute;
+    background:white;
+    border-radius:50px;
+    opacity:.8;
+}
+
+.cloud::before,
+.cloud::after{
+    content:'';
+    position:absolute;
+    background:white;
+    border-radius:50%;
+}
+
+.cloud1{
+    width:140px;
+    height:50px;
+    top:80px;
+    left:10%;
+}
+
+.cloud1::before{
+    width:60px;
+    height:60px;
+    top:-25px;
+    left:20px;
+}
+
+.cloud1::after{
+    width:70px;
+    height:70px;
+    top:-30px;
+    right:20px;
+}
+
+.cloud2{
+    width:180px;
+    height:60px;
+    top:140px;
+    right:15%;
+}
+
+/* Ciudad fondo */
+.city-back{
+    position:absolute;
+    bottom:180px;
+    width:300%;
+    height:220px;
+    background:
+    repeating-linear-gradient(
+        to right,
+        #7f8c8d 0 60px,
+        #95a5a6 60px 110px,
+        #6c7a89 110px 170px
+    );
+    clip-path:polygon(
+        0 100%,0 45%,
+        5% 45%,5% 20%,
+        10% 20%,10% 55%,
+        15% 55%,15% 30%,
+        20% 30%,20% 60%,
+        25% 60%,25% 25%,
+        30% 25%,30% 50%,
+        35% 50%,35% 15%,
+        40% 15%,40% 100%
+    );
+    opacity:.45;
+}
+
+/* Ciudad frontal */
+.city-front{
+    position:absolute;
+    bottom:120px;
+    width:300%;
+    height:280px;
+    background:
+    repeating-linear-gradient(
+        to right,
+        #2c3e50 0 80px,
+        #34495e 80px 150px,
+        #22313f 150px 240px
+    );
+    clip-path:polygon(
+        0 100%,0 35%,
+        5% 35%,5% 5%,
+        10% 5%,10% 50%,
+        15% 50%,15% 20%,
+        20% 20%,20% 65%,
+        25% 65%,25% 15%,
+        30% 15%,30% 45%,
+        35% 45%,35% 10%,
+        40% 10%,40% 100%
+    );
+}
+
+/* Carretera */
+.road{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:140px;
+    background:#3b3b3b;
+}
+
+.road::before{
+    content:'';
+    position:absolute;
+    top:50%;
+    width:100%;
+    height:6px;
+    background:
+    repeating-linear-gradient(
+        to right,
+        white 0 40px,
+        transparent 40px 80px
+    );
+}
+
+/* Coches cartoon */
+.car{
+    position:absolute;
+    bottom:45px;
+    width:130px;
+    height:55px;
+    border-radius:15px;
+    z-index:5;
+    transition:transform .08s linear;
+}
+
+.car::before{
+    content:'';
+    position:absolute;
+    width:80px;
+    height:40px;
+    background:inherit;
+    top:-18px;
+    left:22px;
+    border-radius:14px 14px 5px 5px;
+}
+
+.car::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:
+    radial-gradient(circle at 20% 100%, #222 0 12px, transparent 13px),
+    radial-gradient(circle at 80% 100%, #222 0 12px, transparent 13px);
+}
+
+.car1{
+    background:#e74c3c;
+    left:12%;
+}
+
+.car2{
+    background:#f1c40f;
+    left:58%;
+    bottom:60px;
+}
+
+.car3{
+    background:#2ecc71;
+    left:78%;
+    width:100px;
+}
+
+/* ═══════════════════════════════════════
+   CONTENIDO PRINCIPAL
+═══════════════════════════════════════ */
+
+.main-wrapper{
+    max-width:860px;
+    margin:40px auto;
+    padding:20px;
+    position:relative;
+    z-index:10;
+}
+
+/* Panel glassmorphism */
+.panel{
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.82);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:22px;
+    padding:28px;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.15);
+}
+
+h1{
+    color:#2c3e50;
+    text-align:center;
+    border-bottom:2px solid #3498db;
+    padding-bottom:10px;
+    margin-bottom:6px;
+}
+
+.intro{
+    background:white;
+    border-radius:8px;
+    padding:14px 18px;
+    margin:16px 0 28px;
+    font-size:0.88rem;
+    color:#555;
+    border-left:4px solid #3498db;
+    box-shadow:0 1px 4px rgba(0,0,0,0.07);
+}
+
+/* ── Sección colapsable ── */
+
+details.seccion{
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.08);
+    margin-bottom:16px;
+    overflow:hidden;
+    background:white;
+}
+
+details.seccion > summary{
+    list-style:none;
+    cursor:pointer;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    user-select:none;
+    border-left:5px solid var(--accent);
+}
+
+details.seccion > summary::-webkit-details-marker{
+    display:none;
+}
+
+details.seccion > summary:hover{
+    background-color:#f7fafd;
+}
+
+.sec-num{
+    font-size:0.75rem;
+    font-weight:700;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--accent);
+    color:white;
+    flex-shrink:0;
+}
+
+.sec-title{
+    font-size:1.05rem;
+    font-weight:700;
+    color:#2c3e50;
+    flex:1;
+}
+
+.summary-arrow{
+    font-size:0.85rem;
+    color:#aaa;
+    transition:transform 0.25s;
+}
+
+details.seccion[open] > summary .summary-arrow{
+    transform:rotate(90deg);
+}
+
+/* Colores */
+
+details.s1 { --accent:#2980b9; }
+details.s2 { --accent:#16a085; }
+details.s3 { --accent:#e67e22; }
+details.s4 { --accent:#8e44ad; }
+details.s5 { --accent:#c0392b; }
+details.s6 { --accent:#27ae60; }
+
+.seccion-inner{
+    padding:6px 20px 14px;
+    border-top:1px solid #f0f0f0;
+}
+
+.subgrupo{
+    margin-top:14px;
+}
+
+.subgrupo-titulo{
+    font-size:0.73rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    color:#bbb;
+    margin-bottom:8px;
+}
+
+.card{
+    display:block;
+    background:#f9fbfd;
+    padding:11px 15px;
+    border-radius:7px;
+    text-decoration:none;
+    color:#2c3e50;
+    font-weight:600;
+    font-size:0.97rem;
+    transition:.18s;
+    border-left:4px solid var(--accent);
+    margin-bottom:9px;
+}
+
+.card:hover{
+    transform:translateX(5px) scale(1.01);
+    background-color:#ebf5fb;
+}
+
+.card .card-label{
+    color:var(--accent);
+}
+
+p.descripcion{
+    font-size:0.84rem;
+    color:#666;
+    margin:5px 0 0;
+    font-weight:400;
+    line-height:1.5;
+}
+
+.solo{
+    padding:14px 20px 14px;
+    border-top:1px solid #f0f0f0;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ESCENA CARTOON -->
+<div class="cartoon-scene">
+
+    <div class="sky"></div>
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <div class="city-back"></div>
+    <div class="city-front"></div>
+
+    <div class="road"></div>
+
+    <div class="car car1"></div>
+    <div class="car car2"></div>
+    <div class="car car3"></div>
+
+</div>
+
+<!-- CONTENIDO -->
+<div class="main-wrapper">
+<div class="panel">
+
+<h1>Visualización de Geoestadística Descriptiva</h1>
+
+<div class="intro">
+    Los estados en color negro indican falta de información o información insuficiente.
+</div>
+
+<!-- PEGA AQUÍ TODO TU CONTENIDO ORIGINAL -->
+<!-- (desde los <details> hasta el final) -->
+
+</div>
+</div>
+
+<script>
+
+/* ═══════════════════════════════════════
+   PARALLAX CARTOON
+═══════════════════════════════════════ */
+
+const cityBack = document.querySelector('.city-back');
+const cityFront = document.querySelector('.city-front');
+
+const car1 = document.querySelector('.car1');
+const car2 = document.querySelector('.car2');
+const car3 = document.querySelector('.car3');
+
+window.addEventListener('scroll', () => {
+
+    const y = window.scrollY;
+
+    /* Movimiento ciudad */
+    cityBack.style.transform =
+        `translateX(${-y * 0.15}px)`;
+
+    cityFront.style.transform =
+        `translateX(${-y * 0.35}px)`;
+
+    /* Coches */
+    car1.style.transform =
+        `translateX(${y * 0.45}px)`;
+
+    car2.style.transform =
+        `translateX(${-y * 0.3}px)`;
+
+    car3.style.transform =
+        `translateX(${y * 0.25}px)`;
+
+});
+
+</script>
+
+</body>
+</html>
